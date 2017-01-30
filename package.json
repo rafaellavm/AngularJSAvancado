@@ -1,0 +1,16 @@
+{
+  "name": "projetoangularavancado",
+  "version": "1.0.0",
+  "description": "Projeto Angular Avancado",
+  "main": "index.js",
+  "readme": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/username/repository.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rafaela Marraschi",
+  "license": "ISC"
+}
