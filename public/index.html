@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta http-equiv="content-language" content="pt-br" />
-	<title>AngularJS avançado</title>
+	<title>Cadastro em Angular</title>
     <link href="../css/bootstrap.min.css" rel="stylesheet">
 	<script src="js/main.js"></script>
 	<style type="text/css"></style>
@@ -23,7 +23,8 @@
     </nav>
 </header>
 <section class="container">
-
+<h4>Olá, hoje é {{day | date}}</h4>
+<h5>Total: {{total | currency}}</h5>
     <div class="row">
         <div class="form-inline text-center">
             <div class="form-group pull-left">
@@ -63,9 +64,9 @@
             <tbody>
             <tr ng-repeat="client in clients | filter:search | orderBy: order: reverse">
                 
-                <td>{{ client.name }}</td>
+                <td>{{ client.name | uppercase}}</td>
                 <td>{{ client.tel }}</td>
-                <td>{{ client.address }}</td>
+                <td>{{ client.address | lowercase }}</td>
                 <td>
                     <button ng-click="edit(client);" class="btn btn-default">Editar</button>
                     <button ng-click="destroy(client);" class="btn btn-danger">Destruir</button>

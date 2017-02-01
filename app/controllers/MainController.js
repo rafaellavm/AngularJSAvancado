@@ -1,7 +1,10 @@
 //exportando pro browserify
-module.exports = function ($scope, $http) {
-    $scope.name = "AngularJS avançado";
+module.exports = function ($scope, $http, $filter) {
+    
+    $scope.name = $filter('uppercase')('Cadastro em Angular');
     $scope.clients = [];
+    $scope.day = new Date();
+    $scope.total =  27.35;
 
     var listClients = function () {
          $http.get('http://localhost:8080/server/post.php')
