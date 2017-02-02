@@ -72,14 +72,65 @@ module.exports = function ($scope, $http, $filter) {
     };
 }
 },{}],2:[function(require,module,exports){
+module.exports = function () {
+
+    return {
+        //pra póder interagir com o ngModel
+        require: 'ngModel',
+
+        //é executado depois do template ter sido compilado. Dá ecesso aos eventos do dom
+        // link recebe três parÂmetros. 
+
+        //Scope: pra manipular os dados do elemento
+        //element: traz os eventos de click, de alteração, eventos do key
+        //attr: atributos: nos possibilita ver os outros atributos do elemento (classes, ng-model, valor)
+        //ctrl: colocando 'require: 'ngModel' eu posso colocar também o atributo 'ctrl', que se refere ao controller
+        link: function (scope, element, attr, ctrl) {
+
+            element.bind('keyup', function () {
+                var _formatTel = function (value) {
+                    value = value.replace(/[^0-9]+/g, '');
+                    if (value.length > 4 && value.length <= 8) {
+                        value = value.substring(0, 4) + '-' + value.substring(4, 8);
+                    } else if (value.length > 4) {
+                        value = value.substring(0, 5) + '-' + value.substring(5, 9);
+                    }
+
+                    return value;
+                };
+
+                //exibe o valor do input
+                //console.log(scope.formClient.telClient.$viewValue);
+                //consegue setar o valor
+                ctrl.$setViewValue(_formatTel(ctrl.$viewValue));
+                console.log('2 ', ctrl.$viewValue);
+                //pra renderizar
+                ctrl.$render();
+
+
+            });
+
+            //pra retirar o '-' do telefone pra salvar no banco
+            ctrl.$parsers.push(function (value) {
+                if (value.length > 8) {
+                    value = value.replace(/[^0-9]+/g, '');
+                }
+                return value;
+            });
+        }
+    };
+};
+},{}],3:[function(require,module,exports){
 require('angular');
 require('./locale/angular-locale_pt-br');
 
 var MainController = require('./controllers/MainController');
-angular.module('app', []);
+var masktel = require('./directives/masktel');
 
+angular.module('app', []);
+angular.module('app').directive('maskTel', [masktel]);
 angular.module('app').controller('MainController', ['$scope','$http', '$filter', MainController]);
-},{"./controllers/MainController":1,"./locale/angular-locale_pt-br":3,"angular":5}],3:[function(require,module,exports){
+},{"./controllers/MainController":1,"./directives/masktel":2,"./locale/angular-locale_pt-br":4,"angular":6}],4:[function(require,module,exports){
 'use strict';
 angular.module("ngLocale", [], ["$provide", function($provide) {
     var PLURAL_CATEGORY = {ZERO: "zero", ONE: "one", TWO: "two", FEW: "few", MANY: "many", OTHER: "other"};
@@ -205,7 +256,7 @@ angular.module("ngLocale", [], ["$provide", function($provide) {
         "pluralCat": function(n, opt_precision) {  if (n >= 0 && n <= 2 && n != 2) {    return PLURAL_CATEGORY.ONE;  }  return PLURAL_CATEGORY.OTHER;}
     });
 }]);
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.2
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -30786,8 +30837,8 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":4}]},{},[2])
+},{"./angular":5}]},{},[3])
