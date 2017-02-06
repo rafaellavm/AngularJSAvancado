@@ -3,8 +3,10 @@ module.exports = function ($scope, $http, $filter) {
     
     $scope.name = $filter('uppercase')('Cadastro em Angular');
     $scope.clients = [];
-    $scope.day = new Date();
-    $scope.total =  27.35;
+    $scope.tituloAlerta = "Alerta: ";
+    $scope.mensagem_alerta = "";
+    //$scope.day = new Date();
+    //$scope.total =  27.35;
 
     var listClients = function () {
          $http.get('http://localhost:8080/server/post.php')
@@ -46,23 +48,27 @@ module.exports = function ($scope, $http, $filter) {
         addClients(angular.copy(client));
         $scope.formClient.$setPristine();
         delete $scope.client;
+        $scope.mensagem_alerta = "Adicionado com sucesso!";
 
     };
     $scope.edit = function (client) {
         $scope.client = client;
         $scope.editing = true;
+        $scope.mensagem_alerta = "";
     };
     $scope.save = function () {
         addClients(angular.copy($scope.client));
         $scope.formClient.$setPristine();
         delete $scope.client;
         $scope.editing = false;
+        $scope.mensagem_alerta = "Salvo com sucesso!";
     };
     $scope.destroy = function (client) {
         //console.log($scope.clients);
         //console.log('index of cliente: ', $scope.clients.indexOf(client));
         $scope.clients.splice($scope.clients.indexOf(client), 1);
         destroyClients(client);
+        $scope.mensagem_alerta = "Deletado com sucesso!";
 
     };
     $scope.orderBy = function (col) {

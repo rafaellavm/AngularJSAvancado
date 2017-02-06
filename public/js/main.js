@@ -4,8 +4,10 @@ module.exports = function ($scope, $http, $filter) {
     
     $scope.name = $filter('uppercase')('Cadastro em Angular');
     $scope.clients = [];
-    $scope.day = new Date();
-    $scope.total =  27.35;
+    $scope.tituloAlerta = "Alerta: ";
+    $scope.mensagem_alerta = "";
+    //$scope.day = new Date();
+    //$scope.total =  27.35;
 
     var listClients = function () {
          $http.get('http://localhost:8080/server/post.php')
@@ -47,23 +49,27 @@ module.exports = function ($scope, $http, $filter) {
         addClients(angular.copy(client));
         $scope.formClient.$setPristine();
         delete $scope.client;
+        $scope.mensagem_alerta = "Adicionado com sucesso!";
 
     };
     $scope.edit = function (client) {
         $scope.client = client;
         $scope.editing = true;
+        $scope.mensagem_alerta = "";
     };
     $scope.save = function () {
         addClients(angular.copy($scope.client));
         $scope.formClient.$setPristine();
         delete $scope.client;
         $scope.editing = false;
+        $scope.mensagem_alerta = "Salvo com sucesso!";
     };
     $scope.destroy = function (client) {
         //console.log($scope.clients);
         //console.log('index of cliente: ', $scope.clients.indexOf(client));
         $scope.clients.splice($scope.clients.indexOf(client), 1);
         destroyClients(client);
+        $scope.mensagem_alerta = "Deletado com sucesso!";
 
     };
     $scope.orderBy = function (col) {
@@ -72,6 +78,31 @@ module.exports = function ($scope, $http, $filter) {
     };
 }
 },{}],2:[function(require,module,exports){
+module.exports = function () {
+
+    return {
+        template: `
+         <div class="alert alert-success text-center">
+            <p>{{title}} <b ng-transclude></b></p>                     
+        </div>`,
+        //replate true retira as tags do html
+        replace: false,
+        
+        //'A': <div alert-msg></div>
+        //'E': <alert-msg></alert-msg>
+        //'C': restringe à classe: <div class='alert-msg'></div>
+        restrict: 'E',
+        scope: {
+            //= diz que o valor vem do scope do controller (scope.msg)
+            //caso deseje passar o valor dentro do html como string, usar o @
+            // text: '@title'
+            title: '=title'
+        },
+        //ele habilita a adição de um texto dentro da div da diretiva
+        transclude: true
+    };
+}
+},{}],3:[function(require,module,exports){
 module.exports = function () {
 
     return {
@@ -120,17 +151,19 @@ module.exports = function () {
         }
     };
 };
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 require('angular');
 require('./locale/angular-locale_pt-br');
 
 var MainController = require('./controllers/MainController');
 var masktel = require('./directives/masktel');
+var alertMsg = require('./directives/alertMsg');
 
 angular.module('app', []);
 angular.module('app').directive('maskTel', [masktel]);
+angular.module('app').directive('alertMsg', [alertMsg]);
 angular.module('app').controller('MainController', ['$scope','$http', '$filter', MainController]);
-},{"./controllers/MainController":1,"./directives/masktel":2,"./locale/angular-locale_pt-br":4,"angular":6}],4:[function(require,module,exports){
+},{"./controllers/MainController":1,"./directives/alertMsg":2,"./directives/masktel":3,"./locale/angular-locale_pt-br":5,"angular":7}],5:[function(require,module,exports){
 'use strict';
 angular.module("ngLocale", [], ["$provide", function($provide) {
     var PLURAL_CATEGORY = {ZERO: "zero", ONE: "one", TWO: "two", FEW: "few", MANY: "many", OTHER: "other"};
@@ -256,7 +289,7 @@ angular.module("ngLocale", [], ["$provide", function($provide) {
         "pluralCat": function(n, opt_precision) {  if (n >= 0 && n <= 2 && n != 2) {    return PLURAL_CATEGORY.ONE;  }  return PLURAL_CATEGORY.OTHER;}
     });
 }]);
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.2
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -30837,8 +30870,8 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":5}]},{},[3])
+},{"./angular":6}]},{},[4])

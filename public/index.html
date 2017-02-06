@@ -23,10 +23,14 @@
     </nav>
 </header>
 <section class="container">
-<h4>Olá, hoje é {{day | date}}</h4>
+<!--<h4>Olá, hoje é {{day | date}}</h4>
 <h5>Total: {{total | currency}}</h5>
-{{client.tel}}
+{{client.tel}}-->
     <div class="row">
+        <alert-msg title="tituloAlerta" ng-show="mensagem_alerta">
+            {{mensagem_alerta}}
+        </alert-msg>
+       
         <div class="form-inline text-center">
             <div class="form-group pull-left">
                 <input type="text" ng-model="search" class="form-control" placeholder="Busca">
