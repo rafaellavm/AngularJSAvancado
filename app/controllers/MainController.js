@@ -1,5 +1,5 @@
 //exportando pro browserify
-module.exports = function ($scope, $http, $filter) {
+module.exports = function ($scope, $http, $filter,clientAPIService) {
     
     $scope.name = $filter('uppercase')('Cadastro em Angular');
     $scope.clients = [];
@@ -9,7 +9,7 @@ module.exports = function ($scope, $http, $filter) {
     //$scope.total =  27.35;
 
     var listClients = function () {
-         $http.get('http://localhost:8080/server/post.php')
+        clientAPIService.getClients()
          .then(function(success){
               //console.log(success.data);
               //console.log(success.status);
@@ -19,7 +19,7 @@ module.exports = function ($scope, $http, $filter) {
         });     
     };
     var addClients = function (client) {
-      $http.post('http://localhost:8080/server/post.php', client)
+      clientAPIService.saveClients(client)
         .then(function(success){
              //console.log(success.data);
              //console.log(success.status);
@@ -33,7 +33,7 @@ module.exports = function ($scope, $http, $filter) {
     
     var destroyClients = function (client) {
         client.delete = true;
-        $http.post('http://localhost:8080/server/post.php', client)
+        clientAPIService.saveClients(client)
         .then(function(success){
              //console.log(success.data);
              //console.log(success.status);
