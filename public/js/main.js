@@ -1,6 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 //exportando pro browserify
-module.exports = function ($scope, $http, $filter,clientAPIService) {
+module.exports = function ($scope, $http, $filter,clientAPIService, clientTestService) {
     
     $scope.name = $filter('uppercase')('Cadastro em Angular');
     $scope.clients = [];
@@ -10,7 +10,8 @@ module.exports = function ($scope, $http, $filter,clientAPIService) {
     //$scope.total =  27.35;
 
     var listClients = function () {
-        clientAPIService.getClients()
+        //clientAPIService.getClients()
+        clientTestService.getClients()
          .then(function(success){
               //console.log(success.data);
               //console.log(success.status);
@@ -20,7 +21,8 @@ module.exports = function ($scope, $http, $filter,clientAPIService) {
         });     
     };
     var addClients = function (client) {
-      clientAPIService.saveClients(client)
+      //clientAPIService.saveClients(client)
+      clientTestService.saveClients(client)
         .then(function(success){
              //console.log(success.data);
              //console.log(success.status);
@@ -34,7 +36,8 @@ module.exports = function ($scope, $http, $filter,clientAPIService) {
     
     var destroyClients = function (client) {
         client.delete = true;
-        clientAPIService.saveClients(client)
+        //clientAPIService.saveClients(client)
+        clientTestService.saveClients(client)
         .then(function(success){
              //console.log(success.data);
              //console.log(success.status);
@@ -156,17 +159,19 @@ require('angular');
 require('./locale/angular-locale_pt-br');
 
 var clientAPIService = require('./services/clientAPIService');
+var clientTestService = require('./services/clientTestService');
 var MainController = require('./controllers/MainController');
 var masktel = require('./directives/masktel');
 var alertMsg = require('./directives/alertMsg');
 
 angular.module('app', []);
 angular.module('app').factory('clientAPIService',['$http',clientAPIService]);
+angular.module('app').service('clientTestService',['$http',clientTestService]);
 angular.module('app').directive('maskTel', [masktel]);
 angular.module('app').directive('alertMsg', [alertMsg]);
-angular.module('app').controller('MainController', ['$scope','$http', '$filter', 'clientAPIService', MainController]);
+angular.module('app').controller('MainController', ['$scope','$http', '$filter', 'clientAPIService','clientTestService', MainController]);
 
-},{"./controllers/MainController":1,"./directives/alertMsg":2,"./directives/masktel":3,"./locale/angular-locale_pt-br":5,"./services/clientAPIService":6,"angular":8}],5:[function(require,module,exports){
+},{"./controllers/MainController":1,"./directives/alertMsg":2,"./directives/masktel":3,"./locale/angular-locale_pt-br":5,"./services/clientAPIService":6,"./services/clientTestService":7,"angular":9}],5:[function(require,module,exports){
 'use strict';
 angular.module("ngLocale", [], ["$provide", function($provide) {
     var PLURAL_CATEGORY = {ZERO: "zero", ONE: "one", TWO: "two", FEW: "few", MANY: "many", OTHER: "other"};
@@ -310,6 +315,21 @@ module.exports = function($http){
 
 
 },{}],7:[function(require,module,exports){
+module.exports = function($http){
+   
+   this.getClients = function(){
+
+       return $http.get('http://localhost:8080/server/post.php');
+   };
+
+   this.saveClients = function(client){
+        return $http.post('http://localhost:8080/server/post.php', client);
+    }; 
+};
+
+
+
+},{}],8:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.2
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -30890,8 +30910,8 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":7}]},{},[4])
+},{"./angular":8}]},{},[4])
