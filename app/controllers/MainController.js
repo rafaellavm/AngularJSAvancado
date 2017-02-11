@@ -1,7 +1,7 @@
 //exportando pro browserify
-module.exports = function ($scope, $http, $filter,clientAPIService, clientTestService) {
+module.exports = function ($scope, $http, $filter,clientAPIService, clientTestService, configValue) {
     
-    $scope.name = $filter('uppercase')('Cadastro em Angular');
+    $scope.name = $filter('uppercase')(configValue.appName);
     $scope.clients = [];
     $scope.tituloAlerta = "Alerta: ";
     $scope.mensagem_alerta = "";
