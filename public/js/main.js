@@ -1,17 +1,25 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+module.exports = function(bonusGeneratorProvider){
+    console.log(bonusGeneratorProvider.getLength());
+
+    bonusGeneratorProvider.setLength(20);
+};
+},{}],2:[function(require,module,exports){
 //criando esse arquivo para configurar o projeto
 module.exports = {
     appName: 'Cadastro em Angular',
     apiURL: 'http://localhost:8080/server/post.php'
 };
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 //exportando pro browserify
-module.exports = function ($scope, $http, $filter,clientAPIService, clientTestService, configValue) {
+module.exports = function ($scope, $http, $filter,clientAPIService, clientTestService, configValue, bonusGenerator) {
     
     $scope.name = $filter('uppercase')(configValue.appName);
     $scope.clients = [];
     $scope.tituloAlerta = "Alerta: ";
     $scope.mensagem_alerta = "";
+
+    $scope.bonus = 'Cod.Bonus: ' + bonusGenerator.generator();
     //$scope.day = new Date();
     //$scope.total =  27.35;
 
@@ -86,7 +94,7 @@ module.exports = function ($scope, $http, $filter,clientAPIService, clientTestSe
         $scope.reverse = !$scope.reverse;
     };
 }
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 module.exports = function () {
 
     return {
@@ -111,7 +119,7 @@ module.exports = function () {
         transclude: true
     };
 }
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 module.exports = function () {
 
     return {
@@ -160,11 +168,13 @@ module.exports = function () {
         }
     };
 };
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 require('angular');
 require('./locale/angular-locale_pt-br');
 
 var configValue = require('./config/configValue');
+var bonusGenerator = require('./services/bonusGenerator');
+var configBonusProvider = require('./config/configBonusProvider');
 var clientAPIService = require('./services/clientAPIService');
 var clientTestService = require('./services/clientTestService');
 var MainController = require('./controllers/MainController');
@@ -173,13 +183,16 @@ var alertMsg = require('./directives/alertMsg');
 
 angular.module('app', []);
 angular.module('app').value('configValue',configValue);
+angular.module('app').provider('bonusGenerator',[bonusGenerator]);
+angular.module('app').config(['bonusGeneratorProvider', configBonusProvider]);
 angular.module('app').factory('clientAPIService',['$http','configValue',clientAPIService]);
 angular.module('app').service('clientTestService',['$http','configValue',clientTestService]);
 angular.module('app').directive('maskTel', [masktel]);
 angular.module('app').directive('alertMsg', [alertMsg]);
-angular.module('app').controller('MainController', ['$scope','$http', '$filter', 'clientAPIService','clientTestService','configValue', MainController]);
+angular.module('app').controller('MainController', ['$scope','$http', '$filter', 'clientAPIService','clientTestService','configValue','bonusGenerator', MainController]);
 
-},{"./config/configValue":1,"./controllers/MainController":2,"./directives/alertMsg":3,"./directives/masktel":4,"./locale/angular-locale_pt-br":6,"./services/clientAPIService":7,"./services/clientTestService":8,"angular":10}],6:[function(require,module,exports){
+
+},{"./config/configBonusProvider":1,"./config/configValue":2,"./controllers/MainController":3,"./directives/alertMsg":4,"./directives/masktel":5,"./locale/angular-locale_pt-br":7,"./services/bonusGenerator":8,"./services/clientAPIService":9,"./services/clientTestService":10,"angular":12}],7:[function(require,module,exports){
 'use strict';
 angular.module("ngLocale", [], ["$provide", function($provide) {
     var PLURAL_CATEGORY = {ZERO: "zero", ONE: "one", TWO: "two", FEW: "few", MANY: "many", OTHER: "other"};
@@ -305,7 +318,32 @@ angular.module("ngLocale", [], ["$provide", function($provide) {
         "pluralCat": function(n, opt_precision) {  if (n >= 0 && n <= 2 && n != 2) {    return PLURAL_CATEGORY.ONE;  }  return PLURAL_CATEGORY.OTHER;}
     });
 }]);
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
+module.exports = function bonusGeneratorProvider(){
+    
+    var _length = 5;
+    
+    this.getLength = function(){
+        return _length;
+    };
+
+    this.setLength = function(length){
+        _length = length;
+    };
+
+    this.$get = function(){
+        return {
+            generator: function(){
+                var bonus = '';
+                for(var i = _length; i>0;--i){
+                    bonus += Math.floor(Math.random()*10);
+                }
+                return bonus;
+            }
+        }
+    };
+};
+},{}],9:[function(require,module,exports){
 module.exports = function($http){
     var _getClients = function(){
         return $http.get('http://localhost:8080/server/post.php');
@@ -322,7 +360,7 @@ module.exports = function($http){
 
 
 
-},{}],8:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports = function($http, configValue){
    
    this.getClients = function(){
@@ -338,7 +376,7 @@ module.exports = function($http, configValue){
 
 
 
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.2
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -30919,8 +30957,8 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":9}]},{},[5])
+},{"./angular":11}]},{},[6])
