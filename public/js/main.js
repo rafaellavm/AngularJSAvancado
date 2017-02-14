@@ -1,16 +1,21 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-module.exports = function(bonusGeneratorProvider){
-    console.log(bonusGeneratorProvider.getLength());
-
+module.exports = function(bonusGeneratorProvider,configConstant){
+    //console.log(bonusGeneratorProvider.getLength());
+    console.log(configConstant);
     bonusGeneratorProvider.setLength(20);
 };
 },{}],2:[function(require,module,exports){
+module.exports = {
+    appName:"Cadastro em Angular",
+    apiURL: "http://localhost:8080/server/post.php"
+};
+},{}],3:[function(require,module,exports){
 //criando esse arquivo para configurar o projeto
 module.exports = {
     appName: 'Cadastro em Angular',
     apiURL: 'http://localhost:8080/server/post.php'
 };
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 //exportando pro browserify
 module.exports = function ($scope, $http, $filter,clientAPIService, clientTestService, configValue, bonusGenerator) {
     
@@ -94,7 +99,7 @@ module.exports = function ($scope, $http, $filter,clientAPIService, clientTestSe
         $scope.reverse = !$scope.reverse;
     };
 }
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 module.exports = function () {
 
     return {
@@ -119,7 +124,7 @@ module.exports = function () {
         transclude: true
     };
 }
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = function () {
 
     return {
@@ -168,10 +173,11 @@ module.exports = function () {
         }
     };
 };
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 require('angular');
 require('./locale/angular-locale_pt-br');
 
+var configConstant = require('./config/configConstant');
 var configValue = require('./config/configValue');
 var bonusGenerator = require('./services/bonusGenerator');
 var configBonusProvider = require('./config/configBonusProvider');
@@ -182,9 +188,10 @@ var masktel = require('./directives/masktel');
 var alertMsg = require('./directives/alertMsg');
 
 angular.module('app', []);
+angular.module('app').constant('configConstant',configConstant);
 angular.module('app').value('configValue',configValue);
 angular.module('app').provider('bonusGenerator',[bonusGenerator]);
-angular.module('app').config(['bonusGeneratorProvider', configBonusProvider]);
+angular.module('app').config(['bonusGeneratorProvider','configConstant', configBonusProvider]);
 angular.module('app').factory('clientAPIService',['$http','configValue',clientAPIService]);
 angular.module('app').service('clientTestService',['$http','configValue',clientTestService]);
 angular.module('app').directive('maskTel', [masktel]);
@@ -192,7 +199,7 @@ angular.module('app').directive('alertMsg', [alertMsg]);
 angular.module('app').controller('MainController', ['$scope','$http', '$filter', 'clientAPIService','clientTestService','configValue','bonusGenerator', MainController]);
 
 
-},{"./config/configBonusProvider":1,"./config/configValue":2,"./controllers/MainController":3,"./directives/alertMsg":4,"./directives/masktel":5,"./locale/angular-locale_pt-br":7,"./services/bonusGenerator":8,"./services/clientAPIService":9,"./services/clientTestService":10,"angular":12}],7:[function(require,module,exports){
+},{"./config/configBonusProvider":1,"./config/configConstant":2,"./config/configValue":3,"./controllers/MainController":4,"./directives/alertMsg":5,"./directives/masktel":6,"./locale/angular-locale_pt-br":8,"./services/bonusGenerator":9,"./services/clientAPIService":10,"./services/clientTestService":11,"angular":13}],8:[function(require,module,exports){
 'use strict';
 angular.module("ngLocale", [], ["$provide", function($provide) {
     var PLURAL_CATEGORY = {ZERO: "zero", ONE: "one", TWO: "two", FEW: "few", MANY: "many", OTHER: "other"};
@@ -318,7 +325,7 @@ angular.module("ngLocale", [], ["$provide", function($provide) {
         "pluralCat": function(n, opt_precision) {  if (n >= 0 && n <= 2 && n != 2) {    return PLURAL_CATEGORY.ONE;  }  return PLURAL_CATEGORY.OTHER;}
     });
 }]);
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 module.exports = function bonusGeneratorProvider(){
     
     var _length = 5;
@@ -343,7 +350,7 @@ module.exports = function bonusGeneratorProvider(){
         }
     };
 };
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports = function($http){
     var _getClients = function(){
         return $http.get('http://localhost:8080/server/post.php');
@@ -360,7 +367,7 @@ module.exports = function($http){
 
 
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 module.exports = function($http, configValue){
    
    this.getClients = function(){
@@ -376,7 +383,7 @@ module.exports = function($http, configValue){
 
 
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.2
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -30957,8 +30964,8 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":11}]},{},[6])
+},{"./angular":12}]},{},[7])
