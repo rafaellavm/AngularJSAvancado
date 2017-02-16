@@ -1,11 +1,7 @@
 module.exports = function bonusGeneratorProvider(){
-<<<<<<< 248b6ac5765f6254d8ff57427b6bf111bc119c92
-    
+
     var _length = 5;
-    
-=======
-    var _length = 5;
->>>>>>> Trabalhando com rotas 2
+
     this.getLength = function(){
         return _length;
     };
