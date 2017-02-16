@@ -1,13 +1,20 @@
 {
+<<<<<<< 248b6ac5765f6254d8ff57427b6bf111bc119c92
   "name": "projetoangularavancado",
   "version": "1.0.0",
   "description": "Projeto Angular Avancado",
   "main": "index.js",
+=======
+  "name": "pizzariamarraschi",
+  "version": "1.0.0",
+  "title": "Pizzaria Marraschi",
+>>>>>>> Trabalhando com rotas 2
   "readme": "README.md",
   "repository": {
     "type": "git",
     "url": "git://github.com/username/repository.git"
   },
+<<<<<<< 248b6ac5765f6254d8ff57427b6bf111bc119c92
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,3 +24,16 @@
     "angular-route": "^1.5.3"
   }
 }
+=======
+  "devDependencies": {
+    "angular": "^1.5.2",
+    "angular-route": "^1.5.3",
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-live-server": "0.0.29",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.3"
+
+  }
+}
+>>>>>>> Trabalhando com rotas 2

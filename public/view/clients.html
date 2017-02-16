@@ -1,3 +1,4 @@
+<<<<<<< 248b6ac5765f6254d8ff57427b6bf111bc119c92
 <header ng-include="'view/nav.html'"></header>
 </header>
 <section class="container">
@@ -28,6 +29,37 @@
                 <div class="form-group">
                     <button ng-hide="editing" ng-click="add(client);" ng-disabled="formClient.$invalid" class="btn btn-success">Adicionar</button>
                     <button ng-show="editing" ng-click="save(client);" ng-disabled="formClient.$invalid" class="btn btn-info">Salvar</button>
+=======
+
+<header ng-include="'view/nav.html'"></header>
+<section class="container">
+
+    <div class="row">
+        <h3 ng-bind="bonus"></h3>
+        <alert-msg ng-show="msg" title="Alert:">
+            {{ msg }}
+        </alert-msg>
+
+        <div class="form-inline text-center">
+            <div class="form-group pull-left">
+                <input type="text" ng-model="search" class="form-control" placeholder="Search">
+            </div>
+            <form name="formClient">
+                <div ng-class="{ 'has-error' : formClient.nameClient.$invalid && formClient.nameClient.$dirty, 'has-success' : formClient.nameClient.$valid, 'form-group' : true }">
+                    <input type="text" ng-model="client.name" name="nameClient" ng-required="true" class="form-control" placeholder="Name">
+                </div>
+                <div ng-class="{ 'has-error' : formClient.telClient.$invalid && formClient.telClient.$dirty, 'has-success' : formClient.telClient.$valid, 'form-group' : true }">
+
+                    <input type="text" ng-model="client.tel" name="telClient" ng-required="true" mask-tel class="form-control" ng-pattern="/^\d{4,5}-\d{4}$/" placeholder="telephone ####-####">
+                </div>
+                <div ng-class="{ 'has-error' : formClient.addressClient.$invalid && formClient.addressClient.$dirty, 'has-success' : formClient.addressClient.$valid, 'form-group' : true }">
+                    <input type="text" ng-model="client.address" name="addressClient" ng-required="true" class="form-control" placeholder="Address">
+                </div>
+
+                <div class="form-group">
+                    <button ng-hide="editing" ng-click="add(client);" ng-disabled="formClient.$invalid" class="btn btn-success">Add</button>
+                    <button ng-show="editing" ng-click="save(client);" ng-disabled="formClient.$invalid" class="btn btn-info">Save</button>
+>>>>>>> Trabalhando com rotas 2
                 </div>
 
             </form>
@@ -38,14 +70,22 @@
         <table class="table table-striped">
             <thead>
             <tr>
+<<<<<<< 248b6ac5765f6254d8ff57427b6bf111bc119c92
                 <th ng-click="orderBy('name');" style="cursor:pointer;" >Nome</th>
                 <th ng-click="orderBy('tel');" style="cursor:pointer;">Tel</th>
                 <th ng-click="orderBy('address');" style="cursor:pointer;">Endereço</th>
                 <th>Ações</th>
+=======
+                <th ng-click="orderBy('name');" style="cursor:pointer;" >Name</th>
+                <th ng-click="orderBy('tel');" style="cursor:pointer;">Tel</th>
+                <th ng-click="orderBy('address');" style="cursor:pointer;">Address</th>
+                <th>Action</th>
+>>>>>>> Trabalhando com rotas 2
             </tr>
 
             </thead>
             <tbody>
+<<<<<<< 248b6ac5765f6254d8ff57427b6bf111bc119c92
             <tr ng-repeat="client in clients | filter:search | orderBy: order: reverse">
                 
                 <td>{{ client.name | uppercase}}</td>
@@ -54,6 +94,15 @@
                 <td>
                     <button ng-click="edit(client);" class="btn btn-default">Editar</button>
                     <button ng-click="destroy(client);" class="btn btn-danger">Destruir</button>
+=======
+            <tr ng-repeat="client in clients | filter:search | orderBy:order:reverse">
+                <td>{{ client.name | uppercase }}</td>
+                <td>{{ client.tel }}</td>
+                <td>{{ client.address | lowercase }}</td>
+                <td>
+                    <button ng-click="edit(client);" class="btn btn-default">Edit</button>
+                    <button ng-click="destroy(client);" class="btn btn-danger">Destroy</button>
+>>>>>>> Trabalhando com rotas 2
                 </td>
             </tr>
 

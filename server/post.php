@@ -1,11 +1,26 @@
 <!-- Depois do xampp instalado: criar uma psta dentro de xampp/httdocs/ chamada 'server'. Colocar
 esse arquivo nessa pasta e chamar pelo servidor http://localhost:8080/server/post.php -->
+<<<<<<< 248b6ac5765f6254d8ff57427b6bf111bc119c92
 <?php
 header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Headers: Content-Type, x-xsrf-token');
 header("Access-Control-Allow-Methods: PUT, GET, POST, DELETE, OPTIONS");
 $post = json_decode(file_get_contents("php://input"));
 if($post){
+=======
+
+<?php
+
+header("Access-Control-Allow-Origin: *");
+header('Access-Control-Allow-Headers: Content-Type, x-xsrf-token');
+header("Access-Control-Allow-Methods: PUT, GET, POST, DELETE, OPTIONS");
+
+
+$post = json_decode(file_get_contents("php://input"));
+
+if($post){
+
+>>>>>>> Trabalhando com rotas 2
     if(isset($post->delete)){
         $ret = delete($post->id);
         if($ret){
@@ -18,6 +33,10 @@ if($post){
             echo json_encode($post);exit;
         }
     }
+<<<<<<< 248b6ac5765f6254d8ff57427b6bf111bc119c92
+=======
+
+>>>>>>> Trabalhando com rotas 2
     if(isset($post->id)){
         $ret = update($post);
         if($ret){
@@ -30,6 +49,10 @@ if($post){
             echo json_encode($post);exit;
         }
     }
+<<<<<<< 248b6ac5765f6254d8ff57427b6bf111bc119c92
+=======
+
+>>>>>>> Trabalhando com rotas 2
     $id = save($post);
     if($id){
         $date['status'] = true;
@@ -42,12 +65,24 @@ if($post){
         echo json_encode($post);exit;
     }
 }
+<<<<<<< 248b6ac5765f6254d8ff57427b6bf111bc119c92
 $date = listAll();
 echo json_encode($date);exit;
 function conn(){
     $conn = new \PDO("mysql:host=localhost;dbname=teste_angular","root","");
     return $conn;
 }
+=======
+
+$date = listAll();
+echo json_encode($date);exit;
+
+function conn(){
+    $conn = new \PDO("mysql:host=localhost;dbname=test_angular","root","root");
+    return $conn;
+}
+
+>>>>>>> Trabalhando com rotas 2
 function save($data){
     $db = conn();
     $query = "Insert into `client` (`name`,`tel`,`address`) values (:name,:tel,:address)";
@@ -58,6 +93,10 @@ function save($data){
     $stmt->execute();
     return $db->lastInsertId();
 }
+<<<<<<< 248b6ac5765f6254d8ff57427b6bf111bc119c92
+=======
+
+>>>>>>> Trabalhando com rotas 2
 function update($data){
     $db = conn();
     $query = "UPDATE `client` SET `name`=:name,`tel`=:tel,`address`=:address WHERE `id`=:id;";
@@ -68,6 +107,10 @@ function update($data){
     $stmt->bindValue(':address',$data->address);
     return $stmt->execute();
 }
+<<<<<<< 248b6ac5765f6254d8ff57427b6bf111bc119c92
+=======
+
+>>>>>>> Trabalhando com rotas 2
 function delete($id){
     $db = conn();
     $query = "DELETE FROM `client` WHERE `id`=:id;";
@@ -75,6 +118,10 @@ function delete($id){
     $stmt->bindValue(':id',$id);
     return $stmt->execute();
 }
+<<<<<<< 248b6ac5765f6254d8ff57427b6bf111bc119c92
+=======
+
+>>>>>>> Trabalhando com rotas 2
 function listAll(){
     $db = conn();
     $query = "Select * from `client` order by `id` DESC";
@@ -82,6 +129,10 @@ function listAll(){
     $stmt->execute();
     return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 }
+<<<<<<< 248b6ac5765f6254d8ff57427b6bf111bc119c92
+=======
+
+>>>>>>> Trabalhando com rotas 2
 function find($id){
     $db = conn();
     $query = "Select * from `client` where id=:id";
@@ -90,3 +141,9 @@ function find($id){
     $stmt->execute();
     return $stmt->fetch(\PDO::FETCH_ASSOC);
 }
+<<<<<<< 248b6ac5765f6254d8ff57427b6bf111bc119c92
+=======
+
+
+
+>>>>>>> Trabalhando com rotas 2

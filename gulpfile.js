@@ -16,7 +16,11 @@ gulp.task('watch', function() {
 //servidor criado estático dentro da pasta public, ele vai reconhecer o index.html pra executar e vai abrir um servidor na porta 8700
 
 gulp.task('serve', function() {
+<<<<<<< 248b6ac5765f6254d8ff57427b6bf111bc119c92
     var serve = server.static('./public', 8700);
+=======
+    var serve = server.static('./public', 7500);
+>>>>>>> Trabalhando com rotas 2
     serve.start();
     //watch: depois ele vai ficar observando tudo que está dentro da pasta /public com final .js, se tiver mudança ele restarta o servidor
     gulp.watch('public/js/**/*.js', function (file) {
