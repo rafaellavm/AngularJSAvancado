@@ -1,10 +1,11 @@
 //exportando pro browserify
-module.exports = function ($scope, $http, $filter,clientAPIService, clientTestService, configValue, bonusGenerator) {
+module.exports = function ($scope, $http, $filter,clientAPIService, clientTestService, configValue, bonusGenerator, routeName) {
     
     $scope.name = $filter('uppercase')(configValue.appName);
     $scope.clients = [];
     $scope.tituloAlerta = "Alerta: ";
     $scope.mensagem_alerta = "";
+    $scope.page = routeName;
 
     $scope.bonus = 'Cod.Bonus: ' + bonusGenerator.generator();
     //$scope.day = new Date();

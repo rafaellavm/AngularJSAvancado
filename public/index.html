@@ -11,78 +11,9 @@
 
 </head>
 
-<body ng-controller="MainController">
-<header>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#" ng-bind="name">
-                </a>
-            </div>
-        </div>
-    </nav>
-</header>
-<section class="container">
-<!--<h4>Olá, hoje é {{day | date}}</h4>
-<h5>Total: {{total | currency}}</h5>
-{{client.tel}}-->
-<h3 ng-bind="bonus"></h3>
-    <div class="row">
-        <alert-msg title="tituloAlerta" ng-show="mensagem_alerta">
-            {{mensagem_alerta}}
-        </alert-msg>
-       
-        <div class="form-inline text-center">
-            <div class="form-group pull-left">
-                <input type="text" ng-model="search" class="form-control" placeholder="Busca">
-            </div>
-            <form name="formClient">
-                <div ng-class="{ 'has-error' : formClient.nameClient.$invalid && formClient.nameClient.$dirty, 'has-success' : formClient.nameClient.$valid, 'form-group' : true }">
-                    <input type="text" ng-model="client.name" name="nameClient" ng-required="true" class="form-control" placeholder="Nome">
-                </div>
-                <div ng-class="{ 'has-error' : formClient.telClient.$invalid && formClient.telClient.$dirty, 'has-success' : formClient.telClient.$valid, 'form-group' : true }">
-                    <input type="text" ng-model="client.tel" name="telClient" ng-required="true" class="form-control" ng-pattern="/^\d{4,5}-\d{4}$/" placeholder="Telefone ####-####" mask-tel>
-                </div>
-                <div ng-class="{ 'has-error' : formClient.addressClient.$invalid && formClient.addressClient.$dirty, 'has-success' : formClient.addressClient.$valid, 'form-group' : true }">
-                    <input type="text" ng-model="client.address" name="addressClient" ng-required="true" class="form-control" placeholder="Endereço">
-                </div>
+<body>
 
-                <div class="form-group">
-                    <button ng-hide="editing" ng-click="add(client);" ng-disabled="formClient.$invalid" class="btn btn-success">Adicionar</button>
-                    <button ng-show="editing" ng-click="save(client);" ng-disabled="formClient.$invalid" class="btn btn-info">Salvar</button>
-                </div>
-
-            </form>
-        </div>
-
-    </div>
-    <div class="row">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th ng-click="orderBy('name');" style="cursor:pointer;" >Nome</th>
-                <th ng-click="orderBy('tel');" style="cursor:pointer;">Tel</th>
-                <th ng-click="orderBy('address');" style="cursor:pointer;">Endereço</th>
-                <th>Ações</th>
-            </tr>
-
-            </thead>
-            <tbody>
-            <tr ng-repeat="client in clients | filter:search | orderBy: order: reverse">
-                
-                <td>{{ client.name | uppercase}}</td>
-                <td>{{ client.tel }}</td>
-                <td>{{ client.address | lowercase }}</td>
-                <td>
-                    <button ng-click="edit(client);" class="btn btn-default">Editar</button>
-                    <button ng-click="destroy(client);" class="btn btn-danger">Destruir</button>
-                </td>
-            </tr>
-
-            </tbody>
-        </table>
-    </div>
-</section>
+<div ng-view></div>
 
 
 </body>
